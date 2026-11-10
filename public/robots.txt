@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://ticty.uz/sitemap.xml
+Sitemap: https://startap-texnopark.netlify.app/sitemap.xml
