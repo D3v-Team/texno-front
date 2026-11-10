@@ -16,6 +16,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 export default function App() {
   return (
     <HelmetProvider>
+      {/* Helkll= */}
       <LangProvider>
         <BrowserRouter>
           <Routes>
