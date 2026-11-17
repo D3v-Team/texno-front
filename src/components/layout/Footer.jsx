@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { L, useLang } from '../../i18n/LangContext';
-import { NAV, SITE } from '../../data/site';
+import { NAV_FLAT, SITE } from '../../data/site';
 import { SOCIAL_ICONS } from '../../lib/icons';
 import { Logo } from './Header';
 
@@ -12,12 +12,13 @@ export default function Footer() {
   const groups = [
     {
       title: L('Йўналишлар', 'Направления'),
-      links: NAV.slice(0, 5).map((n) => ({ to: n.to, label: n.label })),
+      links: NAV_FLAT.slice(0, 6),
     },
     {
       title: L('Ариза қолдириш', 'Оставить заявку'),
       links: [
         { to: '/biznes#ariza', label: L('Бизнес муаммоси', 'Бизнес-задача') },
+        { to: '/innox#royxat', label: L('InnoX рўйхати', 'Регистрация InnoX') },
         { to: '/startaplar#ariza', label: L('Стартап ариза', 'Заявка стартапа') },
         { to: '/infratuzilma#bron', label: L('Хона бронлаш', 'Бронирование') },
         { to: '/investorlar#ariza', label: L('Инвестор бўлиш', 'Стать инвестором') },

@@ -120,8 +120,8 @@ export default function Investors() {
           <Button to="/investorlar#ariza" size="lg" icon>
             {t(L('Клубга қўшилиш', 'Вступить в клуб'))}
           </Button>
-          <Button to="/investorlar#tadbirlar" size="lg" variant="ghost">
-            {t(L('Яқин Pitch Day', 'Ближайший Pitch Day'))}
+          <Button to="/yonalishlar#taqvim" size="lg" variant="ghost">
+            {t(L('Тадбирлар тақвими', 'Календарь событий'))}
           </Button>
         </div>
       </PageHero>
@@ -184,7 +184,7 @@ export default function Investors() {
 
       <section id="tadbirlar" className="section scroll-mt-24">
         <div className="container grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHead eyebrow={L('Тадбирлар тақвими', 'Календарь событий')} title={L('Pitch Day, Demo Day ва бошқалар', 'Pitch Day, Demo Day и другие')} />
+          <SectionHead eyebrow={L('Тадбирлар тақвими', 'Календарь событий')} title={L('Яқин тадбирлар', 'Ближайшие события')} />
           <EventsList />
         </div>
       </section>

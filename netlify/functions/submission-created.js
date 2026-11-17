@@ -15,12 +15,13 @@ const TITLES = {
   'xona-bron': '📅 Xona BRON soʻrovi',
   'investor-ariza': '🤝 Yangi INVESTOR',
   aloqa: '✉️ Yangi xabar',
+  'innox-royxat': '🟣 InnoX ga yangi roʻyxat',
 };
 
 const LABELS = {
   company: 'Korxona', sector: 'Soha', district: 'Hudud', size: 'Xodimlar', title: 'Muammo', description: 'Tavsif',
   problem_types: 'Muammo turi', problem_age: 'Qachondan beri', attempts: 'Avval sinalgan', expected: 'Kutilgan natija',
-  budget: 'Byudjet', urgency: 'Muddat', pilot: 'Pilotga tayyor', publish: 'Birjada eʼlon', nda: 'NDA kerak',
+  budget: 'Byudjet', urgency: 'Muddat', pilot: 'Pilotga tayyor', publish: 'Muammolar bankida eʼlon', nda: 'NDA kerak',
   solution_interest: 'Qiziqqan yechim', challenge: 'Muammo', solver_type: 'Taklif beruvchi', team: 'Jamoa', idea: 'Yechim',
   experience: 'Tajriba', project: 'Loyiha', stage: 'Bosqich', program: 'Dastur', team_size: 'Jamoa soni',
   problem: 'Muammo', solution: 'Yechim', link: 'Havola', age: 'Yoshi', self_score: 'Oʻz-oʻzini baholash',
@@ -28,6 +29,8 @@ const LABELS = {
   inv_type: 'Investor turi', organization: 'Tashkilot', ticket: 'Sarmoya hajmi', sectors: 'Sohalar', comment: 'Izoh',
   topic: 'Mavzu', subject: 'Mavzu nomi', message: 'Xabar', name: 'Ism', position: 'Lavozim', phone: 'Telefon',
   email: 'E-mail', telegram: 'Telegram', contact_method: 'Aloqa usuli', lang: 'Til',
+  status: 'Maqomi', university: 'OTM', course: 'Kurs', format: 'Format', idea_title: 'Gʻoya nomi',
+  needs: 'Ehtiyojlar', source: 'Qayerdan bildi', selection_day: 'Saralash kuni',
 };
 
 const SKIP = new Set(['bot-field', 'form-name', 'consent', 'page', 'request_id', 'ip', 'user_agent', 'referrer']);

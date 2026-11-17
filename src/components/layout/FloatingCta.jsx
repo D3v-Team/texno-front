@@ -19,6 +19,7 @@ export default function FloatingCta() {
 
   const visible = show && pathname !== '/biznes';
 
+  
   return (
     <AnimatePresence>
       {visible && (

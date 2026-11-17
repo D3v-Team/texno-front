@@ -5,8 +5,8 @@ import { L } from '../i18n/LangContext';
  * kontakt ma'lumotlari va statistikani haqiqiy qiymatlarga almashtiring.
  */
 export const SITE = {
-  name: L('Сирдарё вилояти Ёшлар технопарки', 'Молодёжный технопарк Сырдарьинской области'),
-  shortName: L('Ёшлар технопарки', 'Молодёжный технопарк'),
+  name: L('Гулистон ёшлар технопарки', 'Гулистанский молодёжный технопарк'),
+  shortName: L('Гулистон ёшлар технопарки', 'Молодёжный технопарк Гулистан'),
   region: L('Сирдарё вилояти', 'Сырдарьинская область'),
   url: 'https://startap-texnopark.netlify.app',
 
@@ -33,21 +33,42 @@ export const SITE = {
   ],
 };
 
+/** Asosiy menyu. `mega: 'directions'` — 6 yo'nalishli ochiluvchi panel; `children` — oddiy ochiluvchi ro'yxat */
 export const NAV = [
-  { to: '/biznes', label: L('Бизнес учун', 'Для бизнеса'), highlight: true },
-  { to: '/muammolar', label: L('Муаммолар биржаси', 'Биржа задач') },
+  { id: 'dirs', to: '/yonalishlar', label: L('Йўналишлар', 'Направления'), mega: 'directions' },
+  { id: 'innox', to: '/innox', label: 'InnoX', badge: true },
+  { id: 'biz', to: '/biznes', label: L('Бизнес учун', 'Для бизнеса'), highlight: true },
+  { id: 'birja', to: '/muammolar', label: L('Муаммолар банки', 'Банк задач') },
+  {
+    id: 'park',
+    label: L('Технопарк', 'Технопарк'),
+    children: [
+      { to: '/startaplar', icon: 'Lightbulb', label: L('Стартаплар', 'Стартапам'), desc: L('Дастурлар ва ариза', 'Программы и заявка') },
+      { to: '/infratuzilma', icon: 'FlaskConical', label: L('Лабораториялар', 'Лаборатории'), desc: L('3D режа ва бронлаш', '3D-план и бронирование') },
+      { to: '/investorlar', icon: 'Handshake', label: L('Инвесторлар', 'Инвесторам'), desc: L('Бизнес клуб', 'Бизнес-клуб') },
+      { to: '/haqida', icon: 'Building2', label: L('Биз ҳақимизда', 'О нас'), desc: L('Экотизим ва алоқа', 'Экосистема и контакты') },
+    ],
+  },
+];
+
+/** Footer va mobil menyu uchun tekis ro'yxat */
+export const NAV_FLAT = [
+  { to: '/yonalishlar', label: L('Йўналишлар', 'Направления') },
+  { to: '/innox', label: 'InnoX' },
+  { to: '/biznes', label: L('Бизнес учун', 'Для бизнеса') },
+  { to: '/muammolar', label: L('Муаммолар банки', 'Банк задач') },
   { to: '/startaplar', label: L('Стартаплар', 'Стартапам') },
   { to: '/infratuzilma', label: L('Лабораториялар', 'Лаборатории') },
   { to: '/investorlar', label: L('Инвесторлар', 'Инвесторам') },
   { to: '/haqida', label: L('Биз ҳақимизда', 'О нас') },
 ];
 
-/** Asosiy ko'rsatkichlar (TODO: haqiqiy raqamlar bilan yangilang) */
+/** Asosiy ko'rsatkichlar — «Yo'l xaritasi 2026» maqsadlari (2026 yil yakuniga qadar) */
 export const STATS = [
-  { value: 48, suffix: '', label: L('резидент стартап', 'стартапов-резидентов') },
-  { value: 126, suffix: '', label: L('бизнес муаммоси қабул қилинди', 'бизнес-задач принято') },
-  { value: 34, suffix: '', label: L('пилот лойиҳа', 'пилотных проекта') },
-  { value: 4.2, suffix: L(' млрд', ' млрд'), decimals: 1, label: L('сўм инвестиция жалб қилинди', 'сум инвестиций привлечено') },
+  { value: 800, suffix: '', label: L('ёш технопарк фаолиятига жалб этилади', 'молодых людей вовлекается в работу технопарка') },
+  { value: 300, suffix: '', label: L('инновацион ва креатив ғоя аниқланади', 'инновационных и креативных идей') },
+  { value: 35, suffix: '', label: L('стартап лойиҳа шакллантирилади', 'стартап-проектов формируется') },
+  { value: 91, suffix: '', label: L('тадбир — 3 ойлик тақвимда', 'событие в 3-месячном календаре') },
 ];
 
 export const RESPONSE_DAYS = 3;

@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, CalendarDays, Clock, MapPin, MessageCircle, Users } from 'lucide-react';
+import { ArrowRight, CalendarDays, MapPin, MessageCircle, Users } from 'lucide-react';
 import { L, useLang } from '../../i18n/LangContext';
 import { Accordion, Badge, Button, Counter, Reveal, SectionHead, TiltCard, cx, useDate } from '../ui';
 import { Icon } from '../../lib/icons';
 import { CHALLENGE_STATUS } from '../../data/challenges';
 import { DISTRICTS, SECTORS, BUDGETS } from '../../data/business';
-import { EVENTS, EVENT_TYPES, FUNDING, ROADMAP } from '../../data/content';
+import { FUNDING, ROADMAP } from '../../data/content';
+import { EVENT_KINDS, parseIso, upcomingDays } from '../../data/calendar';
+import { directionHref, directionOfKind } from '../../data/directions';
 import { STATS } from '../../data/site';
 
 export const sectorOf = (id) => SECTORS.find((s) => s.id === id);
@@ -156,7 +158,7 @@ export function ChallengeCard({ c, onOpen }) {
   );
 }
 
-/* ───────────── Events ───────────── */
+/* ───────────── Events (taqvimdan) ───────────── */
 const WD = {
   uz: ['якшанба', 'душанба', 'сешанба', 'чоршанба', 'пайшанба', 'жума', 'шанба'],
   ru: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
@@ -166,54 +168,63 @@ const MON = {
   ru: ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
 };
 
-export function EventsList({ limit }) {
+export function EventsList({ limit = 5 }) {
   const { t, lang } = useLang();
-  const list = limit ? EVENTS.slice(0, limit) : EVENTS;
+  const days = upcomingDays(limit);
+  if (!days.length) {
+    return (
+      <div className="rounded-3xl border border-dashed border-white/10 p-8 text-center text-slate-400">
+        {t(L('Янги тадбирлар тақвими тез орада эълон қилинади.', 'Новый календарь событий скоро будет опубликован.'))}
+      </div>
+    );
+  }
   return (
     <div className="grid gap-3">
-      {list.map((e, i) => {
-        const [y, m, d] = e.date.split('-').map(Number);
-        const dow = new Date(y, m - 1, d).getDay();
-        const wd = lang === 'ru' ? WD.ru[dow] : t({ uz: WD.uz[dow] });
-        const mon = lang === 'ru' ? MON.ru[m - 1] : t({ uz: MON.uz[m - 1] });
-        const type = EVENT_TYPES[e.type];
+      {days.map(({ date, kinds }, i) => {
+        const dt = parseIso(date);
+        const d = dt.getDate();
+        const m = dt.getMonth();
+        const wd = lang === 'ru' ? WD.ru[dt.getDay()] : t({ uz: WD.uz[dt.getDay()] });
+        const mon = lang === 'ru' ? MON.ru[m] : t({ uz: MON.uz[m] });
         return (
-          <Reveal key={i} delay={i * 0.05}>
-            <div className="group flex flex-col gap-5 rounded-3xl border border-white/[0.07] bg-white/[0.02] p-5 transition hover:border-white/20 hover:bg-white/[0.04] sm:flex-row sm:items-center sm:p-6">
-              <div className="flex shrink-0 items-center gap-4 sm:w-40">
+          <Reveal key={date} delay={i * 0.05}>
+            <div className="flex flex-col gap-4 rounded-3xl border border-white/[0.07] bg-white/[0.02] p-5 transition hover:border-white/20 sm:flex-row sm:items-start sm:p-6">
+              <div className="flex shrink-0 items-center gap-4 sm:w-36">
                 <div className="grid h-16 w-16 place-items-center rounded-2xl border border-white/10 bg-ink-850 text-center">
                   <div>
                     <div className="font-display text-2xl font-semibold leading-none text-white">{d}</div>
                     <div className="mt-1 text-[10px] font-semibold uppercase tracking-wider text-cyanx-300">{mon}</div>
                   </div>
                 </div>
-                <div className="text-xs text-slate-400">
-                  <div className="capitalize">{wd}</div>
-                  <div className="mt-1 flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    {e.time}
-                  </div>
-                </div>
+                <div className="text-xs capitalize text-slate-400">{wd}</div>
               </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge tone={type.tone}>{t(type.label)}</Badge>
-                  <span className="flex items-center gap-1 text-xs text-slate-500">
-                    <MapPin className="h-3 w-3" />
-                    {t(e.place)}
-                  </span>
-                </div>
-                <h3 className="mt-2 font-display text-base font-semibold text-white sm:text-lg">{t(e.title)}</h3>
-                <p className="mt-1 text-sm text-slate-400">{t(e.text)}</p>
-              </div>
-              <Link
-                to="/haqida#aloqa"
-                state={{ topic: t(e.title) }}
-                className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-white transition group-hover:border-cyanx-400/50 sm:self-center"
-              >
-                {t(L('Рўйхатдан ўтиш', 'Записаться'))}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              <ul className="grid min-w-0 flex-1 gap-2">
+                {kinds.map((k) => {
+                  const ev = EVENT_KINDS[k];
+                  const dir = directionOfKind(k);
+                  const href = k === 'innox' ? '/innox#royxat' : dir ? directionHref(dir) : '/yonalishlar';
+                  return (
+                    <li key={k}>
+                      <Link
+                        to={href}
+                        className="group flex items-center justify-between gap-3 rounded-2xl border border-white/[0.06] bg-ink-950/40 px-4 py-3 transition hover:border-white/20"
+                      >
+                        <span className="flex min-w-0 items-center gap-3">
+                          <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: ev.color, boxShadow: `0 0 10px ${ev.color}` }} />
+                          <span className="min-w-0">
+                            <span className="block truncate text-sm font-semibold text-white">{t(ev.title)}</span>
+                            <span className="flex items-center gap-1 text-xs text-slate-500">
+                              <MapPin className="h-3 w-3" />
+                              {t(L('Гулистон ёшлар технопарки', 'Гулистанский молодёжный технопарк'))}
+                            </span>
+                          </span>
+                        </span>
+                        <ArrowRight className="h-4 w-4 shrink-0 text-slate-500 transition group-hover:translate-x-0.5 group-hover:text-white" />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </Reveal>
         );

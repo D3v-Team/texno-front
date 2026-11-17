@@ -1,9 +1,9 @@
 import { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowRight, ArrowUpRight, Check, MousePointerClick, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CalendarDays, Check, MousePointerClick, Rocket, Sparkles } from 'lucide-react';
 import { L, useLang } from '../i18n/LangContext';
-import { Badge, Button, Reveal, SectionHead, TiltCard, cx } from '../components/ui';
+import { Badge, Button, Reveal, SectionHead, TiltCard, cx, useDate } from '../components/ui';
 import { Icon } from '../lib/icons';
 import Seo from '../components/Seo';
 import {
@@ -13,6 +13,9 @@ import { PILLARS, FAQ } from '../data/content';
 import { BUSINESS_FLOW, CASES } from '../data/business';
 import { CHALLENGES } from '../data/challenges';
 import { ROOMS } from '../data/rooms';
+import { DirectionCards } from '../components/sections/DirectionBlocks';
+import { INNOX_FACTS } from '../data/innox';
+import { nextDatesOf } from '../data/calendar';
 
 const HeroScene = lazy(() => import('../components/three/HeroScene'));
 const Building3D = lazy(() => import('../components/three/Building3D'));
@@ -40,7 +43,7 @@ function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-leaf-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-leaf-400" />
               </span>
-              {t(L('Сирдарё вилояти · Ёшлар технопарки', 'Сырдарьинская область · Молодёжный технопарк'))}
+              {t(L('Сирдарё вилояти · Гулистон ёшлар технопарки', 'Сырдарьинская область · Гулистанский молодёжный технопарк'))}
             </span>
           </motion.div>
           <motion.h1
@@ -363,7 +366,7 @@ function ChallengesPreview() {
       <div className="container">
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <SectionHead
-            eyebrow={L('Муаммолар биржаси', 'Биржа задач')}
+            eyebrow={L('Муаммолар банки', 'Банк задач')}
             title={L('Корхоналар ечим кутмоқда', 'Предприятия ждут решений')}
             text={L(
               'Вилоят корхоналари юборган реал муаммолар. Стартап, олим ёки муҳандис бўлсангиз — ечим таклиф қилинг ва биринчи мижозингизни топинг.',
@@ -442,18 +445,130 @@ function Cases() {
   );
 }
 
+function DirectionsSection() {
+  const { t } = useLang();
+  return (
+    <section className="section">
+      <div className="container">
+        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <SectionHead
+            eyebrow={L('«Йўл харитаси» · 2026', '«Дорожная карта» · 2026')}
+            title={L('Олти йўналиш — ўлчанадиган натижалар', 'Шесть направлений — измеримые результаты')}
+            text={L(
+              'Душанбадан жумагача технопаркда ҳар куни тадбир: ёшлар куни, танловлар, InnoX, Innoweek, олимлар ва тадбиркорлар учрашувлари.',
+              'С понедельника по пятницу в технопарке каждый день событие: День молодёжи, конкурсы, InnoX, Innoweek, встречи учёных и бизнеса.'
+            )}
+          />
+          <Reveal>
+            <Button to="/yonalishlar" variant="ghost" icon>
+              {t(L('Барча йўналишлар', 'Все направления'))}
+            </Button>
+          </Reveal>
+        </div>
+        <div className="mt-12">
+          <DirectionCards compact />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InnoxBand() {
+  const { t } = useLang();
+  const date = useDate();
+  const next = nextDatesOf('innox', 1)[0];
+  return (
+    <section className="section">
+      <div className="container">
+        <div className="noise relative overflow-hidden rounded-[2rem] border border-[#a78bfa]/25 bg-gradient-to-br from-[#a78bfa]/[0.14] via-ink-900 to-ink-900 p-6 sm:p-10 lg:p-14">
+          <div className="pointer-events-none absolute -left-24 -top-24 h-96 w-96 rounded-full bg-[#a78bfa]/20 blur-[110px]" />
+          <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_1.05fr]">
+            <div>
+              <Reveal>
+                <span className="eyebrow border-[#a78bfa]/30 bg-[#a78bfa]/10 text-[#c4b5fd]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#a78bfa]" />
+                  {t(L('Бизнес-инкубатор ва акселератор', 'Бизнес-инкубатор и акселератор'))}
+                </span>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h2 className="mt-5 font-display text-5xl font-semibold leading-none sm:text-7xl">
+                  Inno<span className="text-[#a78bfa]" style={{ textShadow: '0 0 50px #a78bfa' }}>X</span>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <p className="lead mt-5 max-w-lg">
+                  {t(
+                    L(
+                      'Ғоянгизни бизнес модел ва прототипгача олиб чиқинг: ментор ва трекерлар, амалий тренинглар, FabLab ва лабораториялар, Demo Day — иштирок бепул.',
+                      'Доведите идею до бизнес-модели и прототипа: менторы и трекеры, практические тренинги, FabLab и лаборатории, Demo Day — участие бесплатное.'
+                    )
+                  )}
+                </p>
+              </Reveal>
+              <Reveal delay={0.15}>
+                <div className="mt-7 grid max-w-md grid-cols-2 gap-3">
+                  {INNOX_FACTS.slice(0, 4).map((f, i) => (
+                    <div key={i} className="rounded-2xl border border-white/[0.07] bg-ink-950/40 px-4 py-3">
+                      <div className="font-display text-2xl font-semibold text-white">{f.v}</div>
+                      <div className="text-xs text-slate-400">{t(f.l)}</div>
+                    </div>
+                  ))}
+                </div>
+              </Reveal>
+              <Reveal delay={0.2}>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <Button to="/innox#royxat" size="lg" className="!bg-none !bg-[#a78bfa] !text-ink-950 hover:!bg-[#c4b5fd]">
+                    <Rocket className="h-4 w-4" />
+                    {t(L('Рўйхатдан ўтиш', 'Зарегистрироваться'))}
+                  </Button>
+                  <Button to="/innox" size="lg" variant="ghost">
+                    {t(L('Дастур, FabLab, стартаплар', 'Программа, FabLab, стартапы'))}
+                  </Button>
+                </div>
+                {next && (
+                  <p className="mt-4 flex items-center gap-2 text-sm text-slate-400">
+                    <CalendarDays className="h-4 w-4 text-[#c4b5fd]" />
+                    {t(L('Яқин машғулот:', 'Ближайшее занятие:'))} <b className="text-white">{date(next)}</b>
+                  </p>
+                )}
+              </Reveal>
+            </div>
+            <Reveal y={40}>
+              <div className="grid grid-cols-6 grid-rows-6 gap-2 sm:gap-3" style={{ aspectRatio: '1 / 0.9' }}>
+                {[
+                  { src: '/media/innox/p01.jpg', cls: 'col-span-4 row-span-4' },
+                  { src: '/media/innox/p02.jpg', cls: 'col-span-2 row-span-3' },
+                  { src: '/media/innox/p06.jpg', cls: 'col-span-2 row-span-3' },
+                  { src: '/media/innox/p05.jpg', cls: 'col-span-3 row-span-2' },
+                  { src: '/media/innox/v1.jpg', cls: 'col-span-1 row-span-2 sm:col-span-1' },
+                ].map((p, i) => (
+                  <Link key={i} to="/innox" className={cx('group relative overflow-hidden rounded-2xl border border-white/10', p.cls)}>
+                    <img src={p.src} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  </Link>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const { t } = useLang();
   return (
     <>
       <Seo
-        title={L('Сирдарё вилояти Ёшлар технопарки — ғоядан бозоргача', 'Молодёжный технопарк Сырдарьинской области — от идеи до рынка')}
+        title={L('Гулистон ёшлар технопарки — ғоядан бозоргача', 'Гулистанский молодёжный технопарк — от идеи до рынка')}
         description={L(
           'Стартаплар учун лаборатория, менторлик ва инвестиция. Тадбиркорлар учун — корхона муаммоларига инновацион ечим. Гулистон, Сирдарё вилояти.',
           'Лаборатории, менторство и инвестиции для стартапов. Инновационные решения задач предприятий для бизнеса. Гулистан, Сырдарьинская область.'
         )}
       />
       <Hero />
+      <DirectionsSection />
+      <InnoxBand />
       <BusinessBand />
       <Pillars />
       <section className="section">
@@ -488,11 +603,11 @@ export default function Home() {
           <SectionHead
             eyebrow={L('Тадбирлар', 'События')}
             title={L('Яқин тадбирлар', 'Ближайшие события')}
-            text={L('Pitch Day, хакатонлар, Demo Day ва воркшоплар — қатнашиш бепул.', 'Pitch Day, хакатоны, Demo Day и воркшопы — участие бесплатное.')}
+            text={L('InnoX, танловлар, «Ёшлар куни», олимлар ва тадбиркорлар учрашувлари — қатнашиш бепул.', 'InnoX, конкурсы, «День молодёжи», встречи учёных и бизнеса — участие бесплатное.')}
           >
             <Reveal delay={0.15}>
-              <Button to="/investorlar#tadbirlar" variant="ghost" className="mt-8" icon>
-                {t(L('Барча тадбирлар', 'Все события'))}
+              <Button to="/yonalishlar#taqvim" variant="ghost" className="mt-8" icon>
+                {t(L('Тадбирлар тақвими', 'Календарь событий'))}
               </Button>
             </Reveal>
           </SectionHead>

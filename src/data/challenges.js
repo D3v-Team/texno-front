@@ -8,7 +8,7 @@ export const CHALLENGE_STATUS = {
 };
 
 /**
- * Muammolar birjasi — korxonalar roziligi bilan, nomisiz e'lon qilingan vazifalar.
+ * Muammolar banki — korxonalar roziligi bilan, nomisiz e'lon qilingan vazifalar.
  * (Namuna ma'lumotlar: haqiqiy arizalar kelgach almashtiring.)
  */
 export const CHALLENGES = [

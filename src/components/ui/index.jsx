@@ -252,7 +252,7 @@ export function PageHero({ eyebrow, title, text, children, aside }) {
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-70" />
       <div className="pointer-events-none absolute -left-40 top-10 h-[420px] w-[420px] rounded-full bg-azure-600/25 blur-[120px]" />
       <div className="pointer-events-none absolute -right-20 top-40 h-[360px] w-[360px] rounded-full bg-leaf-500/15 blur-[120px]" />
-      <div className="container relative grid items-end gap-10 lg:grid-cols-[1.3fr_1fr]">
+      <div className="container relative grid items-end gap-10 lg:grid-cols-[1.3fr_1fr] [&>*]:min-w-0">
         <div>
           <Reveal>
             <span className="eyebrow">

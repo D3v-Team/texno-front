@@ -14,6 +14,7 @@ export const FORM_NAMES = {
   booking: 'xona-bron',
   investor: 'investor-ariza',
   contact: 'aloqa',
+  innox: 'innox-royxat',
 };
 
 const PREFIX = {
@@ -23,6 +24,7 @@ const PREFIX = {
   'xona-bron': 'BRN',
   'investor-ariza': 'INV',
   aloqa: 'MSG',
+  'innox-royxat': 'INX',
 };
 
 /** Ariza raqami: BIZ-2611-4821 */
